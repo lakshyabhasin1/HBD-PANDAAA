@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Happy Birthday Harshita 💖</title>
+<title>Happy 17th Birthday Harshita 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -11,6 +11,11 @@ body{
     background: linear-gradient(135deg,#ff9ecf,#ffb6e6,#ffc6f0);
     text-align:center;
     overflow-x:hidden;
+}
+
+/* Hide Audio Player */
+audio{
+    display:none;
 }
 
 /* Floating Hearts */
@@ -51,34 +56,49 @@ body{
     background:#ff1a8c;
 }
 
-/* Cake */
+/* Cake Section */
 .cake-section{
     display:none;
     margin-top:40px;
 }
 
+/* Cake */
 .cake-container{
     position:relative;
     width:200px;
     margin:0 auto;
-    cursor:pointer;
 }
 
 .cake-half{
     font-size:100px;
     position:absolute;
-    transition:1s;
+    transition:1.2s ease;
 }
 
 .left{ left:0; }
 .right{ right:0; }
 
 .cut-left{
-    transform:translateX(-60px) rotate(-20deg);
+    transform:translateX(-80px) rotate(-30deg);
 }
 
 .cut-right{
-    transform:translateX(60px) rotate(20deg);
+    transform:translateX(80px) rotate(30deg);
+}
+
+/* Knife */
+.knife{
+    font-size:50px;
+    position:absolute;
+    top:-60px;
+    left:70px;
+    cursor:pointer;
+    transition:0.8s ease;
+}
+
+.knife.cut{
+    top:40px;
+    transform:rotate(100deg);
 }
 
 /* Confetti */
@@ -87,23 +107,52 @@ body{
     top:0;
     width:8px;
     height:8px;
-    animation:fall 3s linear infinite;
+    animation:fall 3s linear forwards;
 }
 
 @keyframes fall{
     0%{transform:translateY(-10vh);}
-    100%{transform:translateY(100vh);}
+    100%{transform:translateY(110vh);}
+}
+
+/* Falling Emojis */
+.fall-emoji{
+    position:fixed;
+    top:-50px;
+    font-size:28px;
+    animation:fall 4s linear forwards;
+}
+
+/* Congratulations Text */
+.congrats{
+    margin-top:60px;
+    font-size:36px;
+    font-weight:bold;
+    color:white;
+    text-shadow:0 0 10px #ff0080, 0 0 20px #ff66cc, 0 0 40px #ff99dd;
+    animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+    from{transform:scale(1);}
+    to{transform:scale(1.1);}
 }
 </style>
 </head>
 
 <body>
 
+<!-- 🎵 Birthday Music -->
+<audio id="bgMusic" loop>
+    <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
 <div id="chat"></div>
 
 <div class="cake-section" id="cakeSection">
-    <h2 style="color:white;">Tap the cake and celebrate 🎂💖</h2>
-    <div class="cake-container" onclick="cutCake()">
+    <h2 id="cakeHeading" style="color:white;">Slide the knife and cut the cake 🎂🔪💖</h2>
+    <div class="cake-container">
+        <div class="knife" id="knife" onclick="cutCake()">🔪</div>
         <div class="cake-half left" id="leftCake">🍰</div>
         <div class="cake-half right" id="rightCake">🍰</div>
     </div>
@@ -112,6 +161,23 @@ body{
 <script>
 
 let chat=document.getElementById("chat");
+let music=document.getElementById("bgMusic");
+
+/* Play Music Safely */
+document.addEventListener("click", function(){
+    music.volume = 1.0;
+    music.play().catch(()=>{});
+}, { once:true });
+
+/* Floating Hearts */
+setInterval(()=>{
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+},600);
 
 function showMessage(text, options=[]){
     chat.innerHTML=`
@@ -130,16 +196,6 @@ function showMessage(text, options=[]){
         opt.appendChild(btn);
     });
 }
-
-/* Floating Hearts */
-setInterval(()=>{
-    let heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="💖";
-    heart.style.left=Math.random()*100+"vw";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
-},600);
 
 window.onload=function(){
     showMessage("Okay listen carefully 😌💖 Today is NOT a normal day...",[
@@ -167,7 +223,7 @@ function step4(){
 }
 
 function step5(){
-    showMessage("First of all… we made a cake for you 🎂💕\nAnd not just any cake… SPECIAL birthday cake 😌✨",[
+    showMessage("First of all… we made a cake for you 🎂💕\nSlide the knife and celebrate your 17th birthday 😌✨",[
         {text:"Let’s cut ittt 😋", action:showCake}
     ]);
 }
@@ -178,24 +234,46 @@ function showCake(){
 }
 
 function cutCake(){
+
+    document.getElementById("knife").classList.add("cut");
     document.getElementById("leftCake").classList.add("cut-left");
     document.getElementById("rightCake").classList.add("cut-right");
+
     createConfetti();
+    createFallingEmojis();
+
+    /* Remove cake, knife & heading after animation */
+    setTimeout(()=>{
+        document.getElementById("cakeSection").innerHTML =
+        "<div class='congrats'>🎉 HAPPY 17TH BIRTHDAY HARSHITA 💖✨ 🎉<br>Stay cute, stay dramatic, stay amazing forever 💕</div>";
+    },1500);
 
     setTimeout(()=>{
         showTastePopup();
-    },2000);
+    },3500);
 }
 
 function createConfetti(){
-    for(let i=0;i<80;i++){
+    for(let i=0;i<120;i++){
         let c=document.createElement("div");
         c.className="confetti";
         c.style.left=Math.random()*100+"vw";
         c.style.backgroundColor="hsl("+Math.random()*360+",100%,50%)";
         c.style.animationDuration=(2+Math.random()*3)+"s";
         document.body.appendChild(c);
-        setTimeout(()=>c.remove(),3000);
+        setTimeout(()=>c.remove(),4000);
+    }
+}
+
+function createFallingEmojis(){
+    let emojis=["🐼","🎁","🕯","✨","🎊","💖"];
+    for(let i=0;i<50;i++){
+        let e=document.createElement("div");
+        e.className="fall-emoji";
+        e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+        e.style.left=Math.random()*100+"vw";
+        document.body.appendChild(e);
+        setTimeout(()=>e.remove(),4000);
     }
 }
 
