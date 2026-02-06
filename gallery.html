@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Our Cute Moments 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:'Comic Sans MS', cursive;
+    background:linear-gradient(135deg,#ff9ecf,#ffb6e6,#ffc6f0);
+    text-align:center;
+}
+
+h1{
+    color:white;
+    margin:40px 0;
+    font-size:32px;
+    text-shadow:0 0 10px #ff3399;
+}
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+    padding:30px;
+}
+
+.gallery-item{
+    position:relative;
+    overflow:hidden;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.2);
+    box-shadow:0 0 20px rgba(255,0,150,0.4);
+    transition:0.4s;
+}
+
+.gallery-item img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+    border-radius:20px;
+    transition:0.4s;
+}
+
+.gallery-item:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 30px #ff3399;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<h1>Our Funny & Cute Moments Together 😂💖</h1>
+
+<div class="gallery">
+    <div class="gallery-item"><img src="photo1.jpg"></div>
+    <div class="gallery-item"><img src="photo2.jpg"></div>
+    <div class="gallery-item"><img src="photo3.jpg"></div>
+    <div class="gallery-item"><img src="photo4.jpg"></div>
+    <div class="gallery-item"><img src="photo5.jpg"></div>
+    <div class="gallery-item"><img src="photo6.jpg"></div>
+    <div class="gallery-item"><img src="photo7.jpg"></div>
+    <div class="gallery-item"><img src="photo8.jpg"></div>
+    <div class="gallery-item"><img src="photo9.jpg"></div>
+    <div class="gallery-item"><img src="photo10.jpg"></div>
+</div>
+
+</body>
+</html>

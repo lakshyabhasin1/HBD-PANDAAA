@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday Harshita 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:'Comic Sans MS', cursive;
+    background: linear-gradient(135deg,#ff9ecf,#ffb6e6,#ffc6f0);
+    text-align:center;
+    overflow-x:hidden;
+}
+
+/* Floating Hearts */
+.heart{
+    position:fixed;
+    bottom:-10px;
+    font-size:20px;
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0);opacity:1;}
+    100%{transform:translateY(-110vh);opacity:0;}
+}
+
+.message-box{
+    margin:100px auto;
+    width:90%;
+    max-width:520px;
+    background:rgba(255,255,255,0.95);
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 0 25px #ff66b2;
+}
+
+.option-btn{
+    margin:8px;
+    padding:10px 18px;
+    border:none;
+    border-radius:25px;
+    background:#ff4da6;
+    color:white;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.option-btn:hover{
+    background:#ff1a8c;
+}
+
+/* Cake */
+.cake-section{
+    display:none;
+    margin-top:40px;
+}
+
+.cake-container{
+    position:relative;
+    width:200px;
+    margin:0 auto;
+    cursor:pointer;
+}
+
+.cake-half{
+    font-size:100px;
+    position:absolute;
+    transition:1s;
+}
+
+.left{ left:0; }
+.right{ right:0; }
+
+.cut-left{
+    transform:translateX(-60px) rotate(-20deg);
+}
+
+.cut-right{
+    transform:translateX(60px) rotate(20deg);
+}
+
+/* Confetti */
+.confetti{
+    position:fixed;
+    top:0;
+    width:8px;
+    height:8px;
+    animation:fall 3s linear infinite;
+}
+
+@keyframes fall{
+    0%{transform:translateY(-10vh);}
+    100%{transform:translateY(100vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="chat"></div>
+
+<div class="cake-section" id="cakeSection">
+    <h2 style="color:white;">Tap the cake and celebrate 🎂💖</h2>
+    <div class="cake-container" onclick="cutCake()">
+        <div class="cake-half left" id="leftCake">🍰</div>
+        <div class="cake-half right" id="rightCake">🍰</div>
+    </div>
+</div>
+
+<script>
+
+let chat=document.getElementById("chat");
+
+function showMessage(text, options=[]){
+    chat.innerHTML=`
+    <div class="message-box">
+        <div>${text}</div>
+        <div id="options"></div>
+    </div>
+    `;
+    let opt=document.getElementById("options");
+
+    options.forEach(o=>{
+        let btn=document.createElement("button");
+        btn.className="option-btn";
+        btn.innerText=o.text;
+        btn.onclick=o.action;
+        opt.appendChild(btn);
+    });
+}
+
+/* Floating Hearts */
+setInterval(()=>{
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+},600);
+
+window.onload=function(){
+    showMessage("Okay listen carefully 😌💖 Today is NOT a normal day...",[
+        {text:"Why?? 👀", action:step2}
+    ]);
+}
+
+function step2(){
+    showMessage("Because someone extremely cute, slightly dramatic, and 100% special was born today 🎀✨",[
+        {text:"Who?? 🤨", action:step3}
+    ]);
+}
+
+function step3(){
+    showMessage("Harshitaaaa obviouslyyy 😌💕\nDon't act innocent now 😂",[
+        {text:"Okay fine 😂", action:step4},
+        {text:"I know I'm special 😌", action:step4}
+    ]);
+}
+
+function step4(){
+    showMessage("We have made your day even better 💖\nActually… we worked very hard okay 😤✨",[
+        {text:"How?? 👀", action:step5}
+    ]);
+}
+
+function step5(){
+    showMessage("First of all… we made a cake for you 🎂💕\nAnd not just any cake… SPECIAL birthday cake 😌✨",[
+        {text:"Let’s cut ittt 😋", action:showCake}
+    ]);
+}
+
+function showCake(){
+    chat.innerHTML="";
+    document.getElementById("cakeSection").style.display="block";
+}
+
+function cutCake(){
+    document.getElementById("leftCake").classList.add("cut-left");
+    document.getElementById("rightCake").classList.add("cut-right");
+    createConfetti();
+
+    setTimeout(()=>{
+        showTastePopup();
+    },2000);
+}
+
+function createConfetti(){
+    for(let i=0;i<80;i++){
+        let c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.backgroundColor="hsl("+Math.random()*360+",100%,50%)";
+        c.style.animationDuration=(2+Math.random()*3)+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3000);
+    }
+}
+
+function showTastePopup(){
+    showMessage("Tell us honestly… how tasty was the cake? 😋🍰💖",[
+        {text:"Very Tasty 😍", action:finalStep},
+        {text:"Super Yummyyy 🤤", action:finalStep},
+        {text:"Best Cake Everrr 🥰", action:finalStep}
+    ]);
+}
+
+function finalStep(){
+    showMessage("Hehe we knew it 😌💕\nNow take a look at our funny cute moments together 😂💖",[
+        {text:"Open Gallery 📸", action:goGallery}
+    ]);
+}
+
+function goGallery(){
+    window.location.href="gallery.html";
+}
+
+</script>
+
+</body>
+</html>
